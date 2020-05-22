@@ -1,25 +1,39 @@
-cmake_minimum_required(VERSION 3.7)
-project(tf)
+cmake_minimum_required(VERSION 3.13.0)
 
-# This is a dummy CMakeLists file for CLion, which still doesn't understand Makefiles.
-# Do not try to build the library using this file, it's here only for static analysis.
+# enable new behavior introduced in CMake 3.13, where relative paths will be
+# converted into absolute paths in target_sources(INTERFACE ....)
+cmake_policy(SET CMP0076 NEW)
 
-set(CMAKE_CXX_STANDARD GNU89)
+macro (declareIfLib)
+    add_library(${PROJECT_NAME} INTERFACE)
+    target_include_directories(${PROJECT_NAME}
+        INTERFACE
+           .
+    )
+endMacro()
 
-set(SOURCE_FILES
-        demo/simple/test.c
-        demo/socket_demo/master.c
-        demo/socket_demo/slave.c
-        demo/socket_demo/TF_Config.h
-        demo/demo.c
-        demo/demo.h
-        TinyFrame.c
-        TinyFrame.h
-        TF_Config.example.h
-        demo/utils.c
-        demo/utils.h
-        )
+project(third_party_tinyframe_if)
+    declareIfLib()
 
-include_directories(demo/simple)
+project(third_party_tinyframe)
+    declareIfLib()
+    target_sources(${PROJECT_NAME}
+        INTERFACE
+           TinyFrame.c
+    )
 
-add_executable(tf ${SOURCE_FILES})
+project(third_party_tinyframe_static_cpp CXX)
+    add_library(${PROJECT_NAME} EXCLUDE_FROM_ALL STATIC)
+    SET_SOURCE_FILES_PROPERTIES(TinyFrame.c
+        PROPERTIES
+            LANGUAGE CXX
+            COMPILE_FLAGS -fpermissive
+    )
+    target_include_directories(${PROJECT_NAME}
+        INTERFACE
+           .
+    )
+    target_sources(${PROJECT_NAME}
+        PRIVATE
+           TinyFrame.c
+    )
