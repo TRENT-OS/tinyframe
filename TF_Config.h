@@ -9,11 +9,8 @@
 #include <stdint.h>
 #include <stdio.h> // used by the TF_Error() macro defined below
 //#include <esp8266.h> // when using with esphttpd
-#if !defined(PAGE_SIZE)
-#   define DATAPORT_SIZE 4096 // page size in sel4 defines the dimesion of a dataport
-#else
-#   define DATAPORT_SIZE PAGE_SIZE
-#endif
+
+#include "OS_Dataport.h"
 
 //----------------------------- FRAME FORMAT ---------------------------------
 // The format can be adjusted to fit your particular application needs
@@ -65,11 +62,11 @@ typedef uint8_t TF_COUNT;
  * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  */
 // Plz read disclaimer before changing this
-#define TF_MAX_PAYLOAD_RX DATAPORT_SIZE
+#define TF_MAX_PAYLOAD_RX OS_DATAPORT_DEFAULT_SIZE
 
 // Size of the sending buffer. Larger payloads will be split to pieces and sent
 // in multiple calls to the write function. This can be lowered to reduce RAM usage.
-#define TF_SENDBUF_LEN DATAPORT_SIZE
+#define TF_SENDBUF_LEN OS_DATAPORT_DEFAULT_SIZE
 
 // --- Listener counts - determine sizes of the static slot tables ---
 

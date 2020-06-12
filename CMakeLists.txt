@@ -37,3 +37,8 @@ project(third_party_tinyframe_static_cpp CXX)
         PRIVATE
            TinyFrame.c
     )
+    target_link_libraries(${PROJECT_NAME}
+        PRIVATE
+            os_core_api
+    )
+
