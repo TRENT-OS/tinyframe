@@ -1,8 +1,9 @@
-//
-// TinyFrame configuration file.
-//
-// Rename to TF_Config.h
-//
+/*
+ * TinyFrame configuration file.
+ *
+ * Copyright (C) 2020, HENSOLDT Cyber GmbH
+ * SPDX-License-Identifier: MIT
+ */
 
 #pragma once
 

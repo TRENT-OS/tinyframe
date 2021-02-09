@@ -1,3 +1,10 @@
+/*
+ * TinyFrame library implementation.
+ *
+ * Copyright (C) 2020, HENSOLDT Cyber GmbH
+ * SPDX-License-Identifier: MIT
+ */
+
 //---------------------------------------------------------------------------
 #include "TinyFrame.h"
 #include <stdlib.h> // - for malloc() if dynamic constructor is used
